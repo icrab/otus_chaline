@@ -35,4 +35,4 @@ class GradeTeaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Grade
-        fields = 'type', 'tea', 'string_type'
+        fields = 'id', 'type', 'tea', 'string_type'

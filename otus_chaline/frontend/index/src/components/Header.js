@@ -28,9 +28,9 @@ class Header extends React.Component {
     if (this.props.isAuthenticated){
       return (
         <header>
-          <nav>
-            <ul className="nav-ul">
-              <li><NavLink activeClassName="selected" to='/'>Home</NavLink></li>
+          <nav class="navbar navbar-dark bg-primary">
+            <ul className="navbar-nav mr-auto">
+              <li><NavLink className="nav-link" activeClassName="selected" to='/'>Home</NavLink></li>
               <li><NavLink activeClassName="selected" to='/token'>Token</NavLink></li>
               <li><NavLink activeClassName="selected" to='/my_courses'>My courses</NavLink></li>
             </ul>
@@ -41,15 +41,17 @@ class Header extends React.Component {
     } else {
       return (
         <header>
-          <nav>
-            <ul className="nav-ul">
-              <li><NavLink activeClassName="selected" to='/'>Главная</NavLink></li>
-              <li><NavLink activeClassName="selected" to='/login'>Войти</NavLink></li>
-              <li><NavLink activeClassName="selected" to='/register'>Регистрация</NavLink></li>
-              <li><NavLink activeClassName="selected" to='/order'>Заказ</NavLink></li>
-            </ul>
-            <OrderWidget/>
+          <nav className="navbar navbar-light bg-light">
+              <ul className="navbar-nav">
+                <li className="nav-item mr-2"><NavLink className="nav-link" to='/'>Главная</NavLink></li>
+                <li className="nav-item mr-2"><NavLink className="nav-link" to='/order'>Заказ</NavLink></li>
+              </ul>
+              <ul className="navbar-nav">
+                <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0">Войти</button></li>
+                <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0">Регистрация</button></li>
+              </ul>
           </nav>
+          <OrderWidget/>
         </header>
       )
     }

@@ -16,6 +16,7 @@
   height: 204px;
 }
 
-.nav-ul {
-  width: 50%;
+.dropdown-menu {
+  left: 100%;
+  top: 0;
 }

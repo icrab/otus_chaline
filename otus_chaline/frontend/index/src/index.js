@@ -4,8 +4,8 @@ import App from './components/App'
 import Header from './components/Header'
 import { applyMiddleware, createStore } from "redux";
 import { Provider } from "react-redux";
-import { rootReducer } from './reducers/root'
 import { HashRouter } from 'react-router-dom'
+import { rootReducer } from './reducers/root'
 import { save, load } from "redux-localstorage-simple"
 
 

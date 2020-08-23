@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Tea from "./Tea";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 class FilteredTea extends React.Component {
   constructor(props){
@@ -11,7 +12,6 @@ class FilteredTea extends React.Component {
 
   componentDidMount(){
     const url = 'http://127.0.0.1:8000/api/grade/' + this.props.match.params.id
-    console.log(url)
     axios.get(url)
       .then(res => {
         this.setState({teas : res.data.tea, appReady: true})
@@ -21,7 +21,6 @@ class FilteredTea extends React.Component {
 
   render() {
     if (this.state.appReady){
-      console.log(this.state.teas)
       return (
         <div className="main">
           { this.state.teas.map(tea => {

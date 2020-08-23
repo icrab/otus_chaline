@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { logIn } from '../actions/auth'
 import { createOrder } from '../actions/order'
+import { withRouter } from "react-router-dom";
 
 class App extends React.Component {
   constructor(props){
@@ -36,7 +37,7 @@ class App extends React.Component {
       return (
             <div>
               <Header/>
-              <Navigation />
+              <Navigation/>
               <Switch>
                 <Route path ="/order" component={() => <Order/>}/>
                 <Route path ="/tea/:id" component={(props) => <SingleTea {...props}/>}/>
@@ -62,4 +63,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
