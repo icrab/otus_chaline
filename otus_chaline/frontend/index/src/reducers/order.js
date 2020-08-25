@@ -10,7 +10,7 @@ const defaultState = {
   hasOrder: false,
   order_id: null,
   product_count: 0,
-  products: null
+  products: 0
   }
 
 export const orderReducer = (state = defaultState, action) => {
@@ -49,13 +49,7 @@ export const orderReducer = (state = defaultState, action) => {
         products: state.products.filter(product => product.tea.id !== action.payload.product.tea.id ),
       };
     case DELETE_ORDER_TEXT:
-      return {
-        ...state,
-        hasOrder: false,
-        order_id: null,
-        product_count: null,
-        products: null,
-      }
+      return defaultState
     default:
       return state;
   };

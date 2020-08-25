@@ -20,7 +20,7 @@ class FilteredTea extends React.Component {
   }
 
   render() {
-    if (this.state.appReady){
+    if (this.state.appReady && this.props.auth.isAuthenticated){
       return (
         <div className="main">
           { this.state.teas.map(tea => {
@@ -34,15 +34,25 @@ class FilteredTea extends React.Component {
           }
         </div>
       )
-    } else {
-      return(<div/>)
+    } else if (this.state.appReady && !this.props.auth.isAuthenticated){
+      return (
+        <div className="main">
+          { this.state.teas.map(tea => {
+              return <Tea key={tea.id} tea={tea} in_order={false}/>
+            })
+          }
+        </div>
+      )
+      } else {
+      return (<div/>)
     }
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    order: state.order
+    order: state.order,
+    auth: state.auth
   };
 };
 

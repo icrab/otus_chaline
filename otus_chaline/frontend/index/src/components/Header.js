@@ -4,38 +4,56 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { bindActionCreators } from "redux";
 import { logOut } from '../actions/auth'
-import OrderWidget from './OrderWidget'
+import { toggleLogin, toggleOrder } from '../actions/popup'
+import { deleteOrder } from '../actions/order'
 
 class Header extends React.Component {
     constructor(props) {
       super(props)
     }
+  toggleOrder = () => {
+    const toggleOrder = this.props.toggleOrder;
+    toggleOrder();
+  }
 
-    logout = async () => {
-      event.preventDefault();
-      const url = 'http://127.0.0.1:8000/api-token/logout/';
-      const data = {}
-      let headers = {
-        headers: {
-          Authorization: `Token ${this.props.token}`
-        }
+  toggleLogin = () => {
+    const toggleLogin = this.props.toggleLogin;
+    toggleLogin();
+  }
+
+  logOut = () => {
+    event.preventDefault();
+    const logOut = this.props.logOut;
+    const deleteOrder = this.props.deleteOrder;
+    const url = 'http://127.0.0.1:8000/api/auth/logout/';
+    const data = {}
+    let headers = {
+      headers: {
+        'Authorization': `Token ${this.props.auth.token}`
       }
-      const logOut = this.props.logOut;
-      let res = await axios.post(url, data, headers)
-      logOut(null)
     }
+    let res = axios.post(url, data, headers)
+    deleteOrder()
+    logOut()
+  }
+
   render(){
-    if (this.props.isAuthenticated){
+    if (this.props.auth.isAuthenticated){
       return (
         <header>
-          <nav class="navbar navbar-dark bg-primary">
-            <ul className="navbar-nav mr-auto">
-              <li><NavLink className="nav-link" activeClassName="selected" to='/'>Home</NavLink></li>
-              <li><NavLink activeClassName="selected" to='/token'>Token</NavLink></li>
-              <li><NavLink activeClassName="selected" to='/my_courses'>My courses</NavLink></li>
-            </ul>
+          <nav className="navbar navbar-light bg-light">
+              <ul className="navbar-nav">
+                <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/'>Главная</NavLink></li>
+                <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/contacts'>Контакты</NavLink></li>
+                <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/about'>О нас</NavLink></li>
+              </ul>
+              <ul className="navbar-nav">
+                <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0" onClick={this.toggleOrder}>Заказ</button></li>
+              </ul>
+              <ul className="navbar-nav">
+                <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0" onClick={this.logOut}>Выход</button></li>
+              </ul>
           </nav>
-          <button className="btn btn-primary" onClick={this.logout}>Log out</button>
         </header>
       )
     } else {
@@ -43,15 +61,15 @@ class Header extends React.Component {
         <header>
           <nav className="navbar navbar-light bg-light">
               <ul className="navbar-nav">
-                <li className="nav-item mr-2"><NavLink className="nav-link" to='/'>Главная</NavLink></li>
-                <li className="nav-item mr-2"><NavLink className="nav-link" to='/order'>Заказ</NavLink></li>
+                <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/'>Главная</NavLink></li>
+                <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/contacts'>Контакты</NavLink></li>
+                <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/about'>О нас</NavLink></li>
               </ul>
               <ul className="navbar-nav">
-                <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0">Войти</button></li>
+                <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0" onClick={this.toggleLogin}>Войти</button></li>
                 <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0">Регистрация</button></li>
               </ul>
           </nav>
-          <OrderWidget/>
         </header>
       )
     }
@@ -60,8 +78,19 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    order: state.order
+    order: state.order,
+    auth: state.auth,
+    popup: state.popup,
   };
 };
 
-export default connect(mapStateToProps)(Header);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logOut: bindActionCreators(logOut, dispatch),
+    toggleLogin: bindActionCreators(toggleLogin, dispatch),
+    toggleOrder: bindActionCreators(toggleOrder, dispatch),
+    deleteOrder: bindActionCreators(deleteOrder, dispatch),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

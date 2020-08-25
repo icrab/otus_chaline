@@ -1,10 +1,11 @@
 import React from 'react';
 import Header from "./Header"
 import Main from "./Main"
-import SingleTea from "./SingleTea"
+import SingleTea from "./Tea/SingleTea"
 import Navigation from "./Navigation"
-import FilteredTea from './FilteredTea'
-import Order from "./Order"
+import FilteredTea from './Tea/FilteredTea'
+import Order from "./Order/Order"
+import PopUp from './PopUp'
 
 import axios from "axios";
 import { Switch, Route, Redirect } from 'react-router-dom'
@@ -21,7 +22,7 @@ class App extends React.Component {
 
   componentDidMount(){
     const url = 'http://127.0.0.1:8000/api/order/'
-    const headers = { headers : { 'Authorization': 'Token 07981f7715c5a956368f1a0c4099bb27f8dd200f' } }
+    const headers = { headers : { 'Authorization': `Token ${this.props.auth.token}` } }
     const createOrder = this.props.createOrder;
     axios.get(url, headers)
       .then(res => {
@@ -30,7 +31,6 @@ class App extends React.Component {
         const products = order.product;
         createOrder(order.id, product_count, products)
       })
-
   }
 
   render(){
@@ -38,6 +38,7 @@ class App extends React.Component {
             <div>
               <Header/>
               <Navigation/>
+              <PopUp/>
               <Switch>
                 <Route path ="/order" component={() => <Order/>}/>
                 <Route path ="/tea/:id" component={(props) => <SingleTea {...props}/>}/>
@@ -57,7 +58,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logIn: bindActionCreators(logIn, dispatch),
     createOrder: bindActionCreators(createOrder, dispatch),
   };
 };

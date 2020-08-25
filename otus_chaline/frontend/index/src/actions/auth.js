@@ -6,7 +6,6 @@ export const logIn = token => ({
   payload: token
 })
 
-export const logOut = token => ({
-  type: LOG_OUT_TEXT,
-  payload: token
+export const logOut = () => ({
+  type: LOG_OUT_TEXT
 })

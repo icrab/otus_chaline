@@ -6,8 +6,11 @@ class TeaCountOptionValue extends React.Component {
   }
 
   render() {
+    if (this.props.val == 0) {
+      return (null)
+    }
     let type_string = ''
-    this.props.type == 0 ? type_string = 'гр.' : type_string = 'шт.'
+      this.props.type == 0 ? type_string = 'гр.' : type_string = 'шт.'
       if (this.props.val === this.props.count) {
         return (<option value={this.props.val}>{this.props.gramm} {type_string}</option>)
       } else {

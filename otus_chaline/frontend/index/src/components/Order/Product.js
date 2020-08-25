@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { NavLink }  from 'react-router-dom'
-import TeaCountOptionValue from "./TeaCountOptionValue"
-import TeaCost from "./TeaCost"
-import { generateOptionValueArray } from "../utils/generateOptionValueArray.js"
+import TeaCountOptionValue from "../Tea/TeaCountOptionValue"
+import TeaCost from "../Tea/TeaCost"
+import { generateOptionValueArray } from "../../utils/generateOptionValueArray.js"
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { createOrder, updateProduct, deleteProduct, deleteOrder } from '../actions/order'
+import { createOrder, updateProduct, deleteProduct, deleteOrder } from '../../actions/order'
 
 class Product extends React.Component {
   constructor(props){
@@ -28,7 +28,7 @@ class Product extends React.Component {
 
   removeFromOrder = () => {
     const url = 'http://127.0.0.1:8000/api/order/'
-    const headers = { headers : { 'Authorization': 'Token 07981f7715c5a956368f1a0c4099bb27f8dd200f' } }
+    const headers = { headers : { 'Authorization': `Token ${this.props.auth.token}` } }
     const data = { tea: this.props.tea.id, count: 0 }
     const deleteProduct = this.props.deleteProduct
     axios.post(url, data, headers)
@@ -65,7 +65,8 @@ class Product extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    order: state.order
+    order: state.order,
+    auth: state.auth
   };
 };
 

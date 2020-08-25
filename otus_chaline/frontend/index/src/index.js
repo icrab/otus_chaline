@@ -11,12 +11,17 @@ import { save, load } from "redux-localstorage-simple"
 
 const createStoreWithMiddleware
     = applyMiddleware(
-        save()
+        save({
+          ignoreStates: ["popup"],
+          namespace: "chaline"
+        })
     )(createStore)
 
 const store = createStoreWithMiddleware(
     rootReducer,
-    load()
+    load({
+      namespace: "chaline"
+    })
 )
 
 ReactDOM.render(

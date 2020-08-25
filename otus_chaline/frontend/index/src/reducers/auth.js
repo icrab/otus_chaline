@@ -14,11 +14,7 @@ export const authReducer = (state = defaultState, action) => {
         token: action.payload
       };
     case LOG_OUT_TEXT:
-      return {
-        ...state,
-        isAuthenticated: false,
-        token: action.payload
-      }
+      return defaultState;
     default:
       return state;
   };
