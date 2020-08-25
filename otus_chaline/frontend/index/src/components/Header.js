@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { NavLink }  from 'react-router-dom'
 import { connect } from "react-redux";
 import axios from "axios";
@@ -35,6 +36,7 @@ class Header extends React.Component {
     let res = axios.post(url, data, headers)
     deleteOrder()
     logOut()
+    this.props.history.push('/')
   }
 
   render(){
@@ -48,7 +50,7 @@ class Header extends React.Component {
                 <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/about'>О нас</NavLink></li>
               </ul>
               <ul className="navbar-nav">
-                <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0" onClick={this.toggleOrder}>Заказ</button></li>
+                <li className="nav-item mr-2"><button id="order" className="btn btn-outline-primary my-2 my-sm-0" onClick={this.toggleOrder}>Заказ</button></li>
               </ul>
               <ul className="navbar-nav">
                 <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0" onClick={this.logOut}>Выход</button></li>
@@ -66,7 +68,7 @@ class Header extends React.Component {
                 <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/about'>О нас</NavLink></li>
               </ul>
               <ul className="navbar-nav">
-                <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0" onClick={this.toggleLogin}>Войти</button></li>
+                <li className="nav-item mr-2"><button id="login" className="btn btn-outline-primary my-2 my-sm-0" onClick={this.toggleLogin}>Войти</button></li>
                 <li className="nav-item mr-2"><button className="btn btn-outline-primary my-2 my-sm-0">Регистрация</button></li>
               </ul>
           </nav>
@@ -93,4 +95,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

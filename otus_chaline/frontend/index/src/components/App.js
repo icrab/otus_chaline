@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from "./Header"
 import Main from "./Main"
-import SingleTea from "./Tea/SingleTea"
+import SinglePageTea from "./Tea/SinglePageTea"
 import Navigation from "./Navigation"
 import FilteredTea from './Tea/FilteredTea'
 import Order from "./Order/Order"
@@ -41,7 +41,7 @@ class App extends React.Component {
               <PopUp/>
               <Switch>
                 <Route path ="/order" component={() => <Order/>}/>
-                <Route path ="/tea/:id" component={(props) => <SingleTea {...props}/>}/>
+                <Route path ="/tea/:id" component={(props) => <SinglePageTea {...props}/>}/>
                 <Route path ="/grade/:id" component={(props) => <FilteredTea {...props}/>}/>
                 <Route path ="/" component={() => <Main/>}/>
               </Switch>

@@ -1,4 +1,7 @@
-import { TOGGLE_POPUP_LOGIN_TEXT, TOGGLE_POPUP_ORDER_TEXT } from '../actions/popup'
+import {
+  TOGGLE_POPUP_LOGIN_TEXT,
+  TOGGLE_POPUP_ORDER_TEXT,
+  HIDE_ALL_POPUP_ORDER_TEXT } from '../actions/popup'
 
 const defaultState = {
   loginVisible: false,
@@ -17,6 +20,8 @@ export const popUpReducer = (state = defaultState, action) => {
         ...state,
         orderVisible: !state.orderVisible,
       }
+    case HIDE_ALL_POPUP_ORDER_TEXT:
+      return defaultState
     default:
       return state;
   };

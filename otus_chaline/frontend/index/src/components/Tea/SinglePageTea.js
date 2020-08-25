@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-class SingleTea extends React.Component {
+class SinglePageTea extends React.Component {
   constructor(props){
     super (props);
     this.state = {appReady: false}
@@ -35,4 +35,4 @@ class SingleTea extends React.Component {
   }
 }
 
-export default SingleTea
+export default SinglePageTea

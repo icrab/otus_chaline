@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import OrderWidget from './Order/OrderWidget'
-import LoginWidget from './User/LoginWidget'
+import OrderPopUp from './Order/OrderPopUp'
+import LoginPopUp from './User/LoginPopUp'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { toggleLogin, toggleOrder } from '../actions/popup'
+import { hideAll } from '../actions/popup'
 
 class PopUp extends React.Component {
   constructor(props) {
@@ -22,12 +22,10 @@ class PopUp extends React.Component {
 
  handleClickOutside = event => {
      const domNode = ReactDOM.findDOMNode(this);
-     const toggleOrder = this.props.toggleOrder;
-     const toggleLogin = this.props.toggleLogin;
+     const hideAll = this.props.hideAll;
 
-     if (!domNode || !domNode.contains(event.target)) {
-        //toggleOrder();
-        //toggleLogin();
+     if ( !domNode.contains(event.target) && event.target.id != 'order' && event.target.id != 'login') {
+       hideAll()
      }
   }
 
@@ -35,8 +33,8 @@ class PopUp extends React.Component {
   render(){
     return (
       <div className="popup">
-        {this.props.popup.orderVisible && <OrderWidget/>}
-        {this.props.popup.loginVisible && <LoginWidget/>}
+        {this.props.popup.orderVisible && <OrderPopUp/>}
+        {this.props.popup.loginVisible && <LoginPopUp/>}
       </div>
     )
   }
@@ -50,8 +48,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleLogin: bindActionCreators(toggleLogin, dispatch),
-    toggleOrder: bindActionCreators(toggleOrder, dispatch),
+    hideAll: bindActionCreators(hideAll, dispatch),
   };
 };
 
