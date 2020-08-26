@@ -18,6 +18,19 @@ header {
   min-width: 260px;
 }
 
+.order {
+  flex: auto;
+  max-width: 100%;
+}
+
+.card-column {
+  float: left;
+  width:50%
+}
+
+.order .card-title {
+  height:auto;
+}
 .popup {
   width: 100%;
   position: fixed;

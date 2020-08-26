@@ -48,6 +48,7 @@ class Header extends React.Component {
                 <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/'>Главная</NavLink></li>
                 <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/contacts'>Контакты</NavLink></li>
                 <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/about'>О нас</NavLink></li>
+                <li className="nav-item mr-2"><NavLink exact className="nav-link" to='/history'>История заказов</NavLink></li>
               </ul>
               <ul className="navbar-nav">
                 <li className="nav-item mr-2"><button id="order" className="btn btn-outline-primary my-2 my-sm-0" onClick={this.toggleOrder}>Заказ</button></li>

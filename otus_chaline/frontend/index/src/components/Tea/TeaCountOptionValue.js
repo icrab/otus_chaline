@@ -14,7 +14,7 @@ class TeaCountOptionValue extends React.Component {
       if (this.props.val === this.props.count) {
         return (<option value={this.props.val}>{this.props.gramm} {type_string}</option>)
       } else {
-      return (<option value={this.props.val}>{this.props.gramm} {type_string}</option>)
+        return (<option value={this.props.val}>{this.props.gramm} {type_string}</option>)
       }
   }
 }

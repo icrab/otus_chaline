@@ -5,6 +5,7 @@ import SinglePageTea from "./Tea/SinglePageTea"
 import Navigation from "./Navigation"
 import FilteredTea from './Tea/FilteredTea'
 import Order from "./Order/Order"
+import HistoryList from "./Order/HistoryList"
 import PopUp from './PopUp'
 
 import axios from "axios";
@@ -27,8 +28,8 @@ class App extends React.Component {
     axios.get(url, headers)
       .then(res => {
         const order = res.data
-        const product_count = order.product.length;
-        const products = order.product;
+        const product_count = order.products.length;
+        const products = order.products;
         createOrder(order.id, product_count, products)
       })
   }
@@ -43,6 +44,7 @@ class App extends React.Component {
                 <Route path ="/order" component={() => <Order/>}/>
                 <Route path ="/tea/:id" component={(props) => <SinglePageTea {...props}/>}/>
                 <Route path ="/grade/:id" component={(props) => <FilteredTea {...props}/>}/>
+                <Route path ="/history" component={() => <HistoryList/>}/>
                 <Route path ="/" component={() => <Main/>}/>
               </Switch>
             </div>

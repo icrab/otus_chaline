@@ -37,12 +37,12 @@ class LoginPopUp extends React.Component {
     axios.get(url, headers)
       .then(res => {
         const order = res.data
-        const product_count = order.product.length;
-        const products = order.product;
+        const product_count = order.products.length;
+        const products = order.products;
         createOrder(order.id, product_count, products)
         logIn(token)
       })
-      .catch(error => console.log(error.message))
+      .catch(error => console.log(error))
   }
 
   logIn = () => {

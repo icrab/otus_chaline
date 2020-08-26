@@ -3,6 +3,7 @@ import {
   ADD_PRODUCT_TEXT,
   UPDATE_PRODUCT_TEXT,
   DELETE_PRODUCT_TEXT,
+  REPLACE_ORDER_TEXT,
   DELETE_ORDER_TEXT
 } from '../actions/order'
 
@@ -48,8 +49,15 @@ export const orderReducer = (state = defaultState, action) => {
         product_count: state.product_count - 1,
         products: state.products.filter(product => product.tea.id !== action.payload.product.tea.id ),
       };
+    case REPLACE_ORDER_TEXT:
+      return {
+        ...state,
+        order_id: action.payload.order_id,
+        product_count: 0,
+        products: []
+      };
     case DELETE_ORDER_TEXT:
-      return defaultState
+      return defaultState;
     default:
       return state;
   };

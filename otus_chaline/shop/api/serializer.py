@@ -16,16 +16,16 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    product = ProductSerializer(many=True)
+    products = ProductSerializer(many=True)
 
     class Meta:
         model = Order
-        fields = 'id', 'user', 'product', 'date', 'total_cost', 'is_active'
+        fields = 'id', 'products', 'date', 'total_cost'
 
         extra_kwargs = {
             'id': {'read_only': True},
             'date': {'read_only': True},
             'total_cost': {'read_only': True},
-            'is_active': {'read_only': True},
         }
+
 
