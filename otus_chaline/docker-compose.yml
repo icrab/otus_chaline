@@ -5,8 +5,6 @@ services:
     image: mdillon/postgis
     container_name: chaline_postgres
     privileged: true
-    volumes:
-     - "/opt/chaline/data/db:/var/lib/postgresql/data"
     ports:
      - "5432:5432"
     environment:
