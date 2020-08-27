@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink }  from 'react-router-dom'
 import TeaOrder from './TeaOrder'
+import TeaCost from './TeaCost'
 import { connect } from "react-redux";
 
 class Tea extends React.Component {
@@ -19,6 +20,7 @@ class Tea extends React.Component {
           <div className="card-body">
             <NavLink to={href}><h5 className="card-title">{this.props.tea.name}</h5></NavLink>
             <NavLink to={grade_url} className="card-subtitle mb-2 text-muted">{this.props.tea.grade.type}</NavLink>
+            <TeaCost cost={this.props.tea.cost} type={this.props.tea.storage_type}/>
             {this.props.auth.isAuthenticated && <TeaOrder tea={this.props.tea} in_order={this.props.in_order}/>}
           </div>
         </div>

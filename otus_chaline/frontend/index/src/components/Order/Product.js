@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import API from '../../utils/API'
 import { NavLink }  from 'react-router-dom'
 import TeaCountOptionValue from "../Tea/TeaCountOptionValue"
 import TeaCost from "../Tea/TeaCost"
@@ -18,10 +18,10 @@ class Product extends React.Component {
   }
 
   updateOrder = (count) => {
-    const url = 'http://127.0.0.1:8000/api/order/'
+    const url = 'api/order/'
     const headers = { headers : { 'Authorization': `Token ${this.props.auth.token}` } }
     const data = { tea: this.props.tea.id, count: count }
-    axios.post(url, data, headers)
+    API.post(url, data, headers)
       .then(res => {
         console.log('update', res.data)
       })
@@ -39,11 +39,11 @@ class Product extends React.Component {
   }
 
   removeFromOrder = () => {
-    const url = 'http://127.0.0.1:8000/api/order/'
+    const url = 'api/order/'
     const headers = { headers : { 'Authorization': `Token ${this.props.auth.token}` } }
     const data = { tea: this.props.tea.id, count: 0 }
     const deleteProduct = this.props.deleteProduct
-    axios.post(url, data, headers)
+    API.post(url, data, headers)
       .then(res => {
         console.log('delete', res.data)
         const removed_product = res.data

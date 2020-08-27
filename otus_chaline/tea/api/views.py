@@ -7,13 +7,13 @@ from tea.models import Tea, Grade
 class TeaViewSet(ModelViewSet):
     permission_classes = (AllowAny, )
     serializer_class = TeaGradeSerializer
-    queryset = Tea.objects.all()
+    queryset = Tea.objects.select_related('grade').all()
 
 
 class GradeViewSet(ModelViewSet):
     permission_classes = (AllowAny, )
     serializer_class = GradeTeaSerializer
-    queryset = Grade.objects.all()
+    queryset = Grade.objects.prefetch_related('tea').all()
 
 
 

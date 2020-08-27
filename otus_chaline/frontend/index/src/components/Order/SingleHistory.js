@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import API from '../../utils/API'
 
 class History extends React.Component {
   constructor(props) {
@@ -8,12 +8,11 @@ class History extends React.Component {
   }
 
   componentDidMount(){
-    const url = 'http://127.0.0.1:8000/api/order/history/';
+    const url = 'api/order/history/';
     const headers = { headers : { 'Authorization': `Token ${this.props.auth.token}` } }
 
-    axios.get(url, headers)
+    API.get(url, headers)
       .then(result =>{
-        console.log(result.data)
         this.setState({appReady: true, history: result.data})
       })
       .catch(err => {

@@ -1,9 +1,10 @@
 import React from "react";
 import { NavLink }  from 'react-router-dom'
-import axios from "axios";
+import API from '../../utils/API'
 import TeaCost from './TeaCost'
 import { generateOptionValueArray } from "../../utils/generateOptionValueArray.js"
 import TeaCountOptionValue from './TeaCountOptionValue'
+import TeaCountStringValue from './TeaCountStringValue'
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -19,11 +20,11 @@ class TeaOrder extends React.Component {
   }
 
   addToOrder = () => {
-    const url = 'http://127.0.0.1:8000/api/order/'
+    const url = 'api/order/'
     const headers = { headers : { 'Authorization': `Token ${this.props.auth.token}` } }
     const data = { tea: this.props.tea.id, count: this.state.product_count }
     const addProduct = this.props.addProduct
-    axios.post(url, data, headers)
+    API.post(url, data, headers)
       .then(res => {
         console.log('add', res.data)
         const exist_tea = this.props.order.products.filter(product => product.tea.id == res.data.tea.id )
@@ -44,9 +45,10 @@ class TeaOrder extends React.Component {
       })
       return (
         <div>
-          <TeaCost cost={this.props.tea.cost} type={this.props.tea.storage_type}/>
           <h5>Товар в корзине</h5>
-          <h5>Итог: {cost} руб за {count}</h5>
+          <h5>
+            Итог: {cost} руб за {<TeaCountStringValue type={this.props.tea.storage_type} count={count}/>}
+          </h5>
           <NavLink to={'/order'}><button className="btn btn-primary">Перейти в корзину</button></NavLink>
         </div>
       )
@@ -54,7 +56,6 @@ class TeaOrder extends React.Component {
         const cost = this.state.product_count * this.props.tea.cost
         return (
           <div>
-             <TeaCost cost={this.props.tea.cost} type={this.props.tea.storage_type}/>
                <div className="form-group">
                  <select className="form-control" value={this.state.product_count} onChange={this.handleChangeTeaCount}>
                  { gramms.map((gramm, val) => <TeaCountOptionValue key={val} gramm={gramm} val={val} count={this.state.product_count} type={this.props.tea.storage_type}/>) }

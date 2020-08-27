@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import API from '../../utils/API'
 import Teas from "./Teas";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -11,8 +11,8 @@ class FilteredTea extends React.Component {
   }
 
   componentDidMount(){
-    const url = 'http://127.0.0.1:8000/api/grade/' + this.props.match.params.id
-    axios.get(url)
+    const url = 'api/grade/' + this.props.match.params.id
+    API.get(url)
       .then(res => {
         this.setState({teas : res.data.tea, appReady: true})
       })

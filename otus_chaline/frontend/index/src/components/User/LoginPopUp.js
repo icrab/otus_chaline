@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+import API from '../../utils/API'
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { logIn, logOut } from '../../actions/auth'
@@ -30,11 +30,11 @@ class LoginPopUp extends React.Component {
   }
 
   getOrderAndPushDataOnRedux = (token) => {
-    const url = 'http://127.0.0.1:8000/api/order/'
+    const url = 'api/order/'
     const headers = { headers : { 'Authorization': `Token ${token}` } }
     const createOrder = this.props.createOrder;
     const logIn = this.props.logIn;
-    axios.get(url, headers)
+    API.get(url, headers)
       .then(res => {
         const order = res.data
         const product_count = order.products.length;
@@ -49,13 +49,13 @@ class LoginPopUp extends React.Component {
     event.preventDefault();
     const hideAll = this.props.hideAll;
     hideAll()
-    const url = 'http://127.0.0.1:8000/api/auth/login/';
+    const url = 'api/auth/login/';
     const data = {
       username: this.state.login,
       password: this.state.password
     }
 
-    axios.post(url, data)
+    API.post(url, data)
       .then(result =>{
         this.getOrderAndPushDataOnRedux(result.data.token)
       })

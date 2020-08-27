@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from "axios";
+import API from '../utils/API'
 import ReactDOM from 'react-dom';
 import { NavLink, withRouter } from "react-router-dom";
 
@@ -12,8 +12,8 @@ class Navigation extends React.Component {
   componentDidMount(){
     document.addEventListener('click', this.handleClickOutside, true);
 
-    const url = 'http://127.0.0.1:8000/api/grade/'
-    axios.get(url)
+    const url = 'api/grade/'
+    API.get(url)
       .then(res => {
         this.setState({grades: res.data})
       })

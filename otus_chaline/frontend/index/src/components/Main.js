@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import API from '../utils/API'
 import Teas from "./Tea/Teas";
 
 class Main extends React.Component {
@@ -9,9 +9,9 @@ class Main extends React.Component {
   }
 
   componentDidMount(){
-    const url = 'http://127.0.0.1:8000/api/tea/';
+    const url = 'api/tea/';
 
-    axios.get(url)
+    API.get(url)
       .then(result =>{
         this.setState({appReady: true, teas: result.data})
       })

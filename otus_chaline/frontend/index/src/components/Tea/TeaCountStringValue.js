@@ -6,7 +6,6 @@ class TeaCountStringValue extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     let type_string = ''
     let type_value = this.props.count
     if (this.props.type == 0) {

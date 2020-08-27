@@ -12,7 +12,10 @@ class OrderViewSet(GenericAPIView):
 
     def get(self, request):
         user = request.user
-        order, _ = Order.objects.get_or_create(user=user, is_active=True)
+        order, _ = Order.objects.\
+            prefetch_related('products', 'products__tea', 'products__tea__grade').\
+            get_or_create(user=user, is_active=True)
+
         serializer = OrderSerializer(order)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -21,10 +24,14 @@ class OrderViewSet(GenericAPIView):
         tea_id = request.data['tea']
         count = int(request.data['count'])
 
-        order, _ = Order.objects.get_or_create(user=user, is_active=True)
+        order, _ = Order.objects.\
+            get_or_create(user=user, is_active=True)
+
         tea = Tea.objects.get(id=tea_id)
 
-        product, _ = Product.objects.get_or_create(order=order, tea=tea)
+        product, _ = Product.objects.\
+            get_or_create(order=order, tea=tea)
+
         serializer = ProductSerializer(product)
 
         if count != 0:
@@ -49,7 +56,10 @@ class OrderHistoryViewSet(GenericAPIView):
 
     def get(self, request):
         user = request.user
-        orders = Order.objects.filter(user=user, is_active=False)
+        orders = Order.objects. \
+            prefetch_related('products', 'products__tea', 'products__tea__grade').\
+            filter(user=user, is_active=False).order_by('-date')
+
         serializer = OrderSerializer(orders, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -61,16 +71,20 @@ class OrderBuyViewSet(GenericAPIView):
     def post(self, request):
         user = request.user
         try:
-            order = Order.objects.get(user=user, is_active=True)
+            order = Order.objects.\
+                get(user=user, is_active=True)
+
             order.is_active = False
             order.total_cost = order.get_total_cost
             order.save()
 
-            order, _ = Order.objects.get_or_create(user=user, is_active=True)
+            order, _ = Order.objects.\
+                get_or_create(user=user, is_active=True)
+
         except Exception as err:
             print(err)
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-        response = {'order_id': order.id }
+        response = {'order_id': order.id}
 
         return Response(response, status=status.HTTP_200_OK)

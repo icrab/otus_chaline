@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  postgres:
+    image: mdillon/postgis
+    container_name: chaline_postgres
+    privileged: true
+    volumes:
+     - "/opt/chaline/data/db:/var/lib/postgresql/data"
+    ports:
+     - "5432:5432"
+    environment:
+      - POSTGRES_DB=chaline
+      - POSTGRES_USER=admin_chaline
+      - POSTGRES_PASSWORD=adminchaline
+    networks:
+      cyberdom:
+        ipv4_address: 192.168.100.2
+
+  frontend:
+    build:
+      context: .
+    ports:
+      - "80:80"
+    volumes:
+       - ./:/home/www/app:Z
+    command: >
+      bash -c "
+      python3.6 manage.py migrate &&
+      python3.6 manage.py db_init &&
+      python3.6 manage.py runserver 0.0.0.0:80
+      "
+    networks:
+      cyberdom:
+        ipv4_address: 192.168.100.4
+    depends_on:
+    - postgres
+
+networks:
+  cyberdom:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 192.168.100.0/24
+        gateway: 192.168.100.1

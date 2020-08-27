@@ -8,7 +8,7 @@ import Order from "./Order/Order"
 import HistoryList from "./Order/HistoryList"
 import PopUp from './PopUp'
 
-import axios from "axios";
+import API from '../utils/API'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -22,16 +22,19 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    const url = 'http://127.0.0.1:8000/api/order/'
-    const headers = { headers : { 'Authorization': `Token ${this.props.auth.token}` } }
-    const createOrder = this.props.createOrder;
-    axios.get(url, headers)
-      .then(res => {
-        const order = res.data
-        const product_count = order.products.length;
-        const products = order.products;
-        createOrder(order.id, product_count, products)
-      })
+    if (this.props.auth.isAuthenticated){
+      const url = 'api/order/'
+      const headers = { headers : { 'Authorization': `Token ${this.props.auth.token}` } }
+      const createOrder = this.props.createOrder;
+      API.get(url, headers)
+        .then(res => {
+          const order = res.data
+          const product_count = order.products.length;
+          const products = order.products;
+          createOrder(order.id, product_count, products)
+        })
+        .catch(err => console.log(err.message))
+      }
   }
 
   render(){
@@ -44,7 +47,7 @@ class App extends React.Component {
                 <Route path ="/order" component={() => <Order/>}/>
                 <Route path ="/tea/:id" component={(props) => <SinglePageTea {...props}/>}/>
                 <Route path ="/grade/:id" component={(props) => <FilteredTea {...props}/>}/>
-                <Route path ="/history" component={() => <HistoryList/>}/>
+                {this.props.auth.isAuthenticated && <Route path ="/history" component={() => <HistoryList/>}/>}
                 <Route path ="/" component={() => <Main/>}/>
               </Switch>
             </div>

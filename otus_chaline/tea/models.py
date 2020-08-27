@@ -12,7 +12,7 @@ class Grade(models.Model):
         (TYPE_OOLOONG, 'Улун')
     )
 
-    type = models.PositiveSmallIntegerField(choices=TYPE, default=TYPE_RED)
+    type = models.PositiveSmallIntegerField(unique=True, choices=TYPE)
 
     def __str__(self):
         return self.get_type_display()
@@ -35,7 +35,7 @@ class Tea(models.Model):
     stock = models.BigIntegerField(default=1000)
     year = models.BigIntegerField(default=2020)
     available = models.BooleanField(default=True)
-    grade = models.ForeignKey(Grade, related_name='tea', default=None, null=True, on_delete=models.SET_NULL)
+    grade = models.ForeignKey(Grade, related_name='tea', default=1, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name

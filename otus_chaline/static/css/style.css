@@ -11,6 +11,7 @@ header {
   position: fixed;
   width: 100%;
   top: 0;
+  z-index: 100;
 }
 
 .card {
@@ -23,6 +24,10 @@ header {
   max-width: 100%;
 }
 
+.order-price {
+  width: 100%;
+}
+
 .card-column {
   float: left;
   width:50%
@@ -31,6 +36,7 @@ header {
 .order .card-title {
   height:auto;
 }
+
 .popup {
   width: 100%;
   position: fixed;
@@ -50,6 +56,7 @@ header {
 
 .card-title{
   height: 100px;
+  margin-top: 35px;
 }
 .card-text {
   display: block;

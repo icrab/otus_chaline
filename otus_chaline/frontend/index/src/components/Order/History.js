@@ -13,7 +13,6 @@ class History extends React.Component {
     return (
         <div className="history order card col">
           <div className="card-body">
-            <span>{this.props.id}</span><br/>
             {this.props.order.products.map(product=> {
               return <HistoryTea key={product.tea.id} tea={product.tea} count={product.count}/>
             })}

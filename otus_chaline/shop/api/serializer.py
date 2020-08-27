@@ -28,4 +28,3 @@ class OrderSerializer(serializers.ModelSerializer):
             'total_cost': {'read_only': True},
         }
 
-

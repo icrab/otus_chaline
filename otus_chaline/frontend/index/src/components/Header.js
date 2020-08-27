@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { NavLink }  from 'react-router-dom'
 import { connect } from "react-redux";
-import axios from "axios";
+import API from '../utils/API'
 import { bindActionCreators } from "redux";
 import { logOut } from '../actions/auth'
 import { toggleLogin, toggleOrder } from '../actions/popup'
@@ -26,14 +26,14 @@ class Header extends React.Component {
     event.preventDefault();
     const logOut = this.props.logOut;
     const deleteOrder = this.props.deleteOrder;
-    const url = 'http://127.0.0.1:8000/api/auth/logout/';
+    const url = 'api/auth/logout/';
     const data = {}
     let headers = {
       headers: {
         'Authorization': `Token ${this.props.auth.token}`
       }
     }
-    let res = axios.post(url, data, headers)
+    let res = API.post(url, data, headers)
     deleteOrder()
     logOut()
     this.props.history.push('/')
